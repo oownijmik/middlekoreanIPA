@@ -1,0 +1,26 @@
+@font-face {
+  font-family: NanumBarunGothic-YetHangul;
+  src: local('NanumBarunGothic-YetHangul'),
+    url('fonts/NanumBarunGothic-YetHangul.ttf') format('truetype');
+}
+
+body {
+  background-color: rgb(223, 226, 192);
+}
+h1 {
+  color: black;
+}
+p {
+  color: black;
+}
+textarea {
+  font-family: NanumBarunGothic-YetHangul;
+  width: 400px;
+  height: 200px;
+  resize: none;
+}
+#result {
+  width: 400px;
+  height: 200px;
+  background-color: white;
+}

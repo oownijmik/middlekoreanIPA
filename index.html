@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> 15세기 국어 IPA 변환기</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="akinput.js"></script>
+  <script type="text/javascript" src="pronounce.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>중세국어 발음 변환기</h1>
+
+<p>입력</p>
+
+  <textarea id='inputArea'> </textarea>
+  <button onclick="pronounce()">발음 변환</button>
+  <div id='result'></div>
+  <div>rkskekfkdkfk</div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(function(){
+            $('#inputArea').akInput(); // akorn-input 입력기 initializing
+        });
+    });
+    function pronounce() {
+      const inputArea = document.getElementById('inputArea')
+      const resultElem = document.getElementById('result')
+      resultElem.innerHTML=splittedStringToPhoneticSymbols(splitSyllable(inputArea.value))
+      log('변환전', inputArea.value);
+      log('변환후', splitSyllable(inputArea.value))
+    }
+    function log(key, stringToLog) {
+      var str = key + ' ';
+      for ( var i = 0 ; i <  stringToLog.length ; i ++){
+        str += '0x' +  stringToLog.charCodeAt(i).toString(16) + ' ';
+      }
+      console.log(str);
+    }
+  </script>
+</body>
+</html>
