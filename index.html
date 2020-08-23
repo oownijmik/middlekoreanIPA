@@ -9,21 +9,36 @@
 </head>
 <body>
 
-<h1>중세국어 발음 변환기</h1>
+<h1>15세기 국어 발음 변환기</h1>
 
-<p>입력</p>
+<p>문헌어 입력</p>
 
   <textarea id='inputArea'> </textarea>
   <button onclick="pronounce()">발음 변환</button>
   <div id='result'></div>
-  <div>rkskekfkdkfk</div>
-
+  <div> <b><주의 사항></b>
+    <li>이 사이트의 입력기는 '첫가끝' 방식을 사용하였습니다. '첫가끝' 방식은 한글 2010 이후 버전에서 사용하는 한글 입력기입니다. 위의 옛한글 입력기에 오류가 발생한다면 한글 2010 이후 버전에서 작성하여 복사·붙여넣기를 시도해 보십시오.</li>
+    <li>깜짝새 등의 프로그램에서 한양PUA로 입력된 텍스트를 복사·붙여넣기 한다면 오류가 발생할 수 있습니다.</li>
+  <li> '몃 <u>間ㄷ 집</u>처럼 단독으로 온 관형격 조사(ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㆆ, ㅸ) 역시 위 입력기에서 입력하면 관형격 조사가 초성으로 인식되어 오류가 발생합니다. 역시 한글 2010 이후 버전에서 복사·붙여넣기로 하십시오. </li></div>
+  <li>옛이응과 이응이 입력기에서 생김새가 잘 구별되지 않습니다. 주의하여 입력해 주시기 바랍니다.</li>  
+  <br><b><옛한글 입력 방법></b>ㅿ: ㅁ + Shift (혹은 ㅁ.)
+  <br>ㆁ(옛이응): Shift + ㅇ
+  <br>ㆆ: Shift + ㅎ
+  <br>ㅿ: Shift + ㅅ
+  <br>ㅱ: ㅁ + ㅇ
+  <br>ㅸ: ㅂ + ㅇ
+  <br>ㆍ: ㅏ+ㅏ
+  <br>합용 병서: 각 자음을 순서대로 입력. 예컨대 'ㅺ'는 'ㅅ+ㄱ'으로 입력 </li>
+  <br>
+  <br><b><참고></b>
+  <br> 이 입력기는 김진우(2021), 「중세국어의 음성적 구현을 위한 기초연구」, 고려대학교 석사학위논문에서 구현된 것입니다.
   <script type="text/javascript">
     $(document).ready(function() {
       $(function(){
             $('#inputArea').akInput(); // akorn-input 입력기 initializing
         });
     });
+    
     function pronounce() {
       const inputArea = document.getElementById('inputArea')
       const resultElem = document.getElementById('result')
