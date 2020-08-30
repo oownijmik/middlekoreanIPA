@@ -795,7 +795,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x11D7: //종성 ᇗ
-            phoneticSymbol = 'ɾ';
+            phoneticSymbol = 'ɾn';
             break;
             
         case 0x11b5: //종성 ㄹㅍ
