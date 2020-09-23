@@ -39,6 +39,8 @@ var compatibilityToPhoneticMap = { //ㄱ, ㄷ, ㅂ, 여린 히읗, 순경음 비
     0x3145: '',
 };
 
+
+
 // 초성이면 true 반환, 아니면 false 반환
 function isInitialChar(charCode) {
     return 0x1100 <= charCode && charCode <= 0x115e;
@@ -419,7 +421,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
                 }
             }
             break;
-        case 0x11BE: // 종성 
+        case 0x11BE: // 종성 ㅊ
             if (context.frontEnvironment.type !== null) { // 아무거나 뒤
                 if (context.backEnvironment.type === null) { // 어말
                     phoneticSymbol = 't˺';
@@ -771,18 +773,16 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             phoneticSymbol = 'm';
             break;
         case 0x11AA: // 종성 ᆪ
-            if (context.frontEnvironment.type === 'middle') { // 모음 뒤(받침에만 쓰임)
-                if (context.backEnvironment.type === null) { // 어말
-                    phoneticSymbol = 'k˺';
-                }
-                else if ([0x1100, 0x1103, 0x1107, 0x1109, 0x110C].includes(context.backEnvironment.charCode)) { // 초성 ㄱ, ㄷ,  ㅂ, ㅅ, ㅈ 앞
-                    phoneticSymbol = 'k˺';
-                }
-                else if ([0x1102, 0x1106].includes(context.backEnvironment.charCode)) { // 초성 ㄴ, ㅁ 앞
-                    phoneticSymbol = 'ŋ';
-                }
+         if (context.frontEnvironment.type === 'middle') { // 모음 뒤(받침에만 쓰임)
+            if (context.backEnvironment.type === null) { // 어말
+                phoneticSymbol = 'k˺';
             }
-            break;
+            else { // 초성 ㄱ, ㄷ,  ㅂ, ㅅ, ㅈ 앞
+                phoneticSymbol = 'k˺s*';
+            }
+        }
+        break;
+        
         case 0x11F1: // 종성 ᇱ // TODO ㅇㅅ이 아니라 옛ㅇㅅ이 맞는지 확인
             phoneticSymbol = 'ŋ';
             break;
@@ -814,14 +814,164 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             phoneticSymbol = 'ɾp˺';
             break;
 
-        default:
-            if (charCode in middleToPhoneticMap) { // (처리할 수 있는)모음
-                phoneticSymbol = middleToPhoneticMap[charCode];
-            }
+        
+        case 0x119e:
+            phoneticSymbol = 'ʌ';
+            break;
 
-            else if (charCode in compatibilityToPhoneticMap) {
+        case 0x1173:
+            phoneticSymbol = 'ɨ';
+            break;
+            
+        case 0x1175:
+            phoneticSymbol = 'i';
+            break;
+
+        case 0x1169:
+            phoneticSymbol = 'o';
+            break;
+
+        case 0x1161:
+            phoneticSymbol = 'a';
+            break;
+
+        case 0x116e:
+            phoneticSymbol = 'u';
+            break;
+        
+        case 0x1165:
+            phoneticSymbol = 'ə';
+            break;
+
+        case 0x116d: //ㅛㅛ
+            console.log('here');
+            console.log(context);
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                    phoneticSymbol = 'o';
+                }
+            else {
+                phoneticSymbol = 'jo';
+            }
+            break;
+
+        case 0x1163:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'a';
+            }
+            else {
+            phoneticSymbol = 'ja';
+            }
+            break;
+
+        case 0x1172:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'u'
+            }
+            else {phoneticSymbol = 'ju';
+            }
+            break;
+
+        case 0x1167:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'ə'
+            }
+            else {phoneticSymbol = 'jə';
+            }
+            break;
+
+        case 0x11a1:
+            phoneticSymbol = 'ʌj';
+            break;
+
+        case 0x1174:
+            phoneticSymbol = 'ɨj';
+            break;
+
+        case 0x116c:
+            phoneticSymbol = 'oj';
+            break;
+
+        case 0x1162:
+            phoneticSymbol = 'aj';
+            break;
+
+        case 0x1171:
+            phoneticSymbol = 'uj';
+            break;
+
+        case 0x1166:
+            phoneticSymbol = 'əj';
+            break;
+
+        case 0x1188:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'oj'
+            }
+            else {phoneticSymbol = 'joj';
+            }
+            break;
+
+        case 0x1164:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'aj'
+            }
+            else {    
+        phoneticSymbol = 'jaj';}
+            break;
+
+        case 0x1194:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'uj'
+            }
+            else {phoneticSymbol = 'juj';
+        }
+            break;
+
+        case 0x1168:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'əj'
+            }    
+            else{phoneticSymbol = 'jəj';
+        }
+            break;
+
+        case 0x116b:
+            phoneticSymbol = 'waj';
+            break;
+
+        case 0x1170:
+            phoneticSymbol = 'wəj';
+            break;
+
+        case 0x116a:
+            phoneticSymbol = 'wa';
+            break;
+
+        case 0x116f:
+            phoneticSymbol = 'wə';
+            break;
+
+        case 0x1192:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'ujəj'
+            }  
+            else {phoneticSymbol = 'jujəj';
+            }
+            break;
+
+        case 0x1191:
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+                phoneticSymbol = 'ujə'
+            }
+            else {
+            phoneticSymbol = 'jujə';}
+            break;
+
+        default:
+            if (charCode in compatibilityToPhoneticMap) {
                 phoneticSymbol = compatibilityToPhoneticMap[charCode];
             }
+            
             else { // 처리할 수 없는 코드
                 phoneticSymbol = '?';
             }
@@ -836,7 +986,10 @@ function getFrontEnvironment(splittedStr, currentIdx) {
         type: null,
         charCode: 0
     };
-    if (currentIdx > 0 && isMiddleChar(splittedStr.charCodeAt(currentIdx - 1))) {
+    if (currentIdx > 0 && isInitialChar(splittedStr.charCodeAt(currentIdx - 1))) {
+        frontEnvironment.type = 'initial';
+        frontEnvironment.charCode = splittedStr.charCodeAt(currentIdx - 1);
+    }else if (currentIdx > 0 && isMiddleChar(splittedStr.charCodeAt(currentIdx - 1))) {
         frontEnvironment.type = 'middle';
         frontEnvironment.charCode = splittedStr.charCodeAt(currentIdx - 1);
     }
