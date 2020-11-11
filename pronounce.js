@@ -523,30 +523,78 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             // TODO ㅎ이 받침에 오는 경우는?
             break;
         case 0x1140: // 초성 ㅿ
-            if (context.frontEnvironment.type === null) { // 어두
-                phoneticSymbol = 'z';
-            }
-            else if (context.frontEnvironment.type === 'middle') { // 모음 뒤
-                if (context.backEnvironment.type === 'middle') { // 모음 앞
+     if (context.frontEnvironment.type === null) { // 어두(어절의 시작)
+                if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                    phoneticSymbol = 'ʒ';
+                    // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                }
+                else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
                     phoneticSymbol = 'z';
                 }
             }
-            else { // 받침 자음 뒤
-                phoneticSymbol = 'z';
+            else if (context.frontEnvironment.type === 'middle') { // 모음 뒤
+                if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                    phoneticSymbol = 'ʒ';
+                    // ㆍ, ㅡ , ㅗ, ㅏ,  ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                }
+                else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
+                    phoneticSymbol = 'z';
+                }
             }
+            else if (context.frontEnvironment.type === 'final') { // 받침 뒤
+                if ([0x11AB, 0x11AF, 0x11B7, 0x11BC, 0x11F0, 0x11B1].includes(context.frontEnvironment.charCode)) { // 받침 ㄴ, ㄹ, ㅁ, ㅇ, ㆁ(옛이응), ㄻ 뒤
+                    if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                        phoneticSymbol = 'ʒ';
+                        // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                    }
+                    else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
+                        phoneticSymbol = 'z';
+                    }
+                }
+                else { // 받침 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㄹㆆ, ㅧ, ㅦ, ㄺ, ㄼ, ㄽ, ㅯ, ㅄ,  ㄱㅅ, ㄹㆆ, ㆁㅅ(옛이응+ㅅ) 등 그 외 자음 뒤
+                    if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                        phoneticSymbol = 'ʒ';
+                        // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                    }
+                    else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
+                        phoneticSymbol = 'z';
+                    }
+                }
+            }
+            else if (context.frontEnvironment.type === 'compatibility') {//단독 뒤
+                if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                    phoneticSymbol = 'ʒ';
+                    // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                }
+                else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
+                    phoneticSymbol = 'z';
+                }
+            }
+           
             break;
         case 0x11EB: // 종성 ㅿ
             if (context.frontEnvironment.type === 'middle') { // 모음 뒤
-                if (context.backEnvironment.type === null) { // 어말
+                if (context.backEnvironment.charCode === 0x110B && backContextOfNextChar) { // 뒤에 ㅇ이 있고 그 뒤에 모음이 있을 때
+                    if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(backContextOfNextChar.charCode)) { // 이, 요, 야, 유, 여, , 얘, , 예 앞
+                        phoneticSymbol = 'ʒ';
+                    }
+                    else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(backContextOfNextChar.charCode)) { // , 으, 오, 아, 우, 어, , 의, 외, 애, 위, 에, 왜, 웨, 와, 워 앞
+                        phoneticSymbol = 'z';
+                    }
+                }
+                else if (context.backEnvironment.type === null) { // 어말(어절의 끝)
                     phoneticSymbol = 'z';
                 }
-                else if (context.backEnvironment.charCode === 0x1102) { // 초성 ㄴ 앞
+                else if ([0x1102, 0x1105, 0x1106].includes(context.backEnvironment.charCode)) { // ㄴ, ㄹ, ㅁ 앞
                     phoneticSymbol = 'z';
                 }
-                else if (context.backEnvironment.charCode === 0x110B) { // 초성 ㅇ 앞
+                else if (context.backEnvironment.charCode === 0x1112) { // ㅎ 앞
                     phoneticSymbol = 'z';
                 }
-                else if (context.backEnvironment.charCode === 0x112B) { // 초성 ᄫ 앞
+                else if ([0x112B, 1140].includes(context.backEnvironment.charCode)) { // ㅸ, ㅿ 앞
+                    phoneticSymbol = 'z';
+                }
+                else { // ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㅳ, ㅄ, ㅺ, ㅼ, ㅽ 등 그 외 앞
                     phoneticSymbol = 'z';
                 }
             }
@@ -874,7 +922,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
         case 0x116d: //ㅛㅛ
             console.log('here');
             console.log(context);
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                     phoneticSymbol = 'o';
                 }
             else {
@@ -883,7 +931,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1163:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'a';
             }
             else {
@@ -892,7 +940,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1172:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'u'
             }
             else {phoneticSymbol = 'ju';
@@ -900,7 +948,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1167:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'ə'
             }
             else {phoneticSymbol = 'jə';
@@ -932,7 +980,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1188:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'oj'
             }
             else {phoneticSymbol = 'joj';
@@ -940,7 +988,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1164:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'aj'
             }
             else {    
@@ -948,7 +996,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1194:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'uj'
             }
             else {phoneticSymbol = 'juj';
@@ -956,7 +1004,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1168:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'əj'
             }    
             else{phoneticSymbol = 'jəj';
@@ -980,7 +1028,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1192:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'əj'
             }  
             else {phoneticSymbol = 'jəj';
@@ -988,7 +1036,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x1191:
-            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
+            if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D, 0x1140].includes(context.frontEnvironment.charCode)) {
                 phoneticSymbol = 'ə'
             }
             else {
