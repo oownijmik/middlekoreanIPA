@@ -497,7 +497,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
                 if ([0x119E, 0x1161, 0x1165, 0x11A1, 0x1162, 0x1166].includes(context.backEnvironment.charCode)) { // ㆍ, ㅏ, ㅓ, ㆎ, ㅐ, ㅔ 앞
                     phoneticSymbol = 'h';
                 }
-                else if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // l, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                else if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168, 0x1191, 0x1192].includes(context.backEnvironment.charCode)) { // l, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
                     phoneticSymbol = 'ç';
                 }
                 else if ([0x1173, 0x1174].includes(context.backEnvironment.charCode)) { // ㅡ, ㅢ 앞
@@ -622,7 +622,7 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
                 if ([0x119E, 0x1161, 0x1165, 0x11A1, 0x1162, 0x1166].includes(context.backEnvironment.charCode)) { // ㆍ, ㅏ, ㅓ, ㆎ, ㅐ, ㅔ 앞
                     phoneticSymbol = 'x';
                 }
-                else if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // l, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                else if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168, 0x1191, 0x1192].includes(context.backEnvironment.charCode)) { // l, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
                     phoneticSymbol = 'x';
                 }
                 else if ([0x1173, 0x1174].includes(context.backEnvironment.charCode)) { // ㅡ, ㅢ 앞
@@ -981,18 +981,18 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
 
         case 0x1192:
             if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
-                phoneticSymbol = 'ujəj'
+                phoneticSymbol = 'əj'
             }  
-            else {phoneticSymbol = 'jujəj';
+            else {phoneticSymbol = 'jəj';
             }
             break;
 
         case 0x1191:
             if([0x1109, 0x110C, 0x110e, 0x110A, 0x110D].includes(context.frontEnvironment.charCode)) {
-                phoneticSymbol = 'ujə'
+                phoneticSymbol = 'ə'
             }
             else {
-            phoneticSymbol = 'jujə';}
+            phoneticSymbol = 'jə';}
             break;
 
         default:
