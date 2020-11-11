@@ -618,7 +618,31 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             }
             break;
         case 0x1158: // 초성 ㆅ, 받침 x
-            phoneticSymbol = 'x';
+            if (context.frontEnvironment.type === null) { // 어두
+                if ([0x119E, 0x1161, 0x1165, 0x11A1, 0x1162, 0x1166].includes(context.backEnvironment.charCode)) { // ㆍ, ㅏ, ㅓ, ㆎ, ㅐ, ㅔ 앞
+                    phoneticSymbol = 'x';
+                }
+                else if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // l, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                    phoneticSymbol = 'x';
+                }
+                else if ([0x1173, 0x1174].includes(context.backEnvironment.charCode)) { // ㅡ, ㅢ 앞
+                    phoneticSymbol = 'x';
+                }
+                else if ([0x1169, 0x116E, 0x116C, 0x1171, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) { // ㅗ, ㅜ, ㅚ, ㅟ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                    phoneticSymbol = 'x';
+                }
+            }
+            else if (context.frontEnvironment.type === 'middle') { // 모음 뒤
+                phoneticSymbol = 'x';
+            }
+            else if (context.frontEnvironment.type === 'final') { // 받침 뒤
+                if ([0x11A8, 0x11AE, 0x11B8, 0x11BA, 0x11B0, 0x11B2].includes(context.frontEnvironment.charCode)) { // 받침 ㄱ, ㄷ, ㅂ, ㅅ, ㄺ, ㄼ, 뒤
+                    phoneticSymbol = 'ʰ';
+                }
+                else if ([0x11AB, 0x11AF, 0x11B7, 0x11BC, 0x11F0, 0x11D9].includes(context.frontEnvironment.charCode)) { // ㄴ, ㄹ, ㅁ, ㅇ, ㆁ(옛이응) ㄹㆆ 뒤
+                    phoneticSymbol = 'x';
+                }
+            }
             break;
         case 0x112D: // 초성 ㅺ, 받침 x
             phoneticSymbol = 'k*';
