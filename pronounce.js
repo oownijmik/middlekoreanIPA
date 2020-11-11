@@ -538,10 +538,10 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
         case 0x11EB: // 종성 ㅿ
             if (context.frontEnvironment.type === 'middle') { // 모음 뒤
                 if (context.backEnvironment.type === null) { // 어말
-                    phoneticSymbol = 't˺';
+                    phoneticSymbol = 'z';
                 }
                 else if (context.backEnvironment.charCode === 0x1102) { // 초성 ㄴ 앞
-                    phoneticSymbol = 'n;';
+                    phoneticSymbol = 'z';
                 }
                 else if (context.backEnvironment.charCode === 0x110B) { // 초성 ㅇ 앞
                     phoneticSymbol = 'z';
@@ -791,11 +791,15 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
 
         case 0x11C8: //종성 ᇈ
-            phoneticSymbol = 'n';
+            phoneticSymbol = 'nz';
             break;
 
         case 0x11D7: //종성 ᇗ
-            phoneticSymbol = 'ɾn';
+            phoneticSymbol = 'ɾz';
+            break;
+       
+        case 0x11DF: //종성 ㅰ
+            phoneticSymbol = 'mz';
             break;
             
         case 0x11b5: //종성 ㄹㅍ
