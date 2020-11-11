@@ -620,17 +620,54 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             phoneticSymbol = 'p*';
             break;
         case 0x110A: // 초성 ㅆ
-            if (context.frontEnvironment.type === null) { // 어두
-                phoneticSymbol = 's*';
-            }
-            else if (context.frontEnvironment.type === 'middle') { // 모음 뒤
-                if (context.backEnvironment.type === 'middle') { // 모음 앞
+          if (context.frontEnvironment.type === null) { // 어두(어절의 시작)
+                if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                    phoneticSymbol = 'ʃ*';
+                    // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                }
+                else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
                     phoneticSymbol = 's*';
                 }
             }
-            else { // 받침 자음 뒤
-                phoneticSymbol = 's*';
+            else if (context.frontEnvironment.type === 'middle') { // 모음 뒤
+                if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                    phoneticSymbol = 'ʃ*';
+                    // ㆍ, ㅡ , ㅗ, ㅏ,  ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                }
+                else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
+                    phoneticSymbol = 's*';
+                }
             }
+            else if (context.frontEnvironment.type === 'final') { // 받침 뒤
+                if ([0x11AB, 0x11AF, 0x11B7, 0x11BC, 0x11F0, 0x11B1].includes(context.frontEnvironment.charCode)) { // 받침 ㄴ, ㄹ, ㅁ, ㅇ, ㆁ(옛이응), ㄻ 뒤
+                    if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                        phoneticSymbol = 'ʃ*';
+                        // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                    }
+                    else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
+                        phoneticSymbol = 's*';
+                    }
+                }
+                else { // 받침 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㄹㆆ, ㅧ, ㅦ, ㄺ, ㄼ, ㄽ, ㅯ, ㅄ,  ㄱㅅ, ㄹㆆ, ㆁㅅ(옛이응+ㅅ) 등 그 외 자음 뒤
+                    if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                        phoneticSymbol = 'ʃ*';
+                        // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                    }
+                    else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
+                        phoneticSymbol = 's*';
+                    }
+                }
+            }
+            else if (context.frontEnvironment.type === 'compatibility') {//단독 뒤
+                if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                    phoneticSymbol = 'ʃ*';
+                    // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                }
+                else if ([0x119E, 0x1173, 0x1169, 0x1161, 0x116E, 0x1165, 0x11A1, 0x1174, 0x116C, 0x1162, 0x1171, 0x1166, 0x116B, 0x1170, 0x116A, 0x116F].includes(context.backEnvironment.charCode)) {
+                    phoneticSymbol = 's*';
+                }
+            }
+           
             break;
         case 0x11BB: // 종성 ㅆ
             if (context.frontEnvironment.type === 'middle') { // 모음 뒤
