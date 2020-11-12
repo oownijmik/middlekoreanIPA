@@ -863,15 +863,46 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             }
             break;
         case 0x1122: // 초성 ㅴ
-            if (context.frontEnvironment.charCode === 0x11BA) { // 받침 ㅅ 뒤
-                phoneticSymbol = 'p*k*';
-            }
-            else { // 나머지 모든 환경
+     if (context.frontEnvironment.type === null) { // 어두
                 phoneticSymbol = 'pk*';
+            }
+            else if (context.frontEnvironment.type === 'final') { // 종성 뒤
+                if ([0x11ab, 0x11af, 0x11b7, 0x11bc, 0x11f0, 0x11B1].includes(context.frontEnvironment.charCode)) { // 받침 ㄴ, ㄹ, ㅁ, ㅇ, ㆁ(옛이응), ㄻ 뒤
+                    phoneticSymbol = 'pk*';
+                }
+                else { // 받침 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㄹㆆ, ㅧ, ㄺ, ㄼ, ㄽ, ㅯ, ㅄ,  ㄱㅅ, ㄹㆆ, ㆁㅅ(옛이응+ㅅ) 등 그 외 자음 뒤
+                    phoneticSymbol = 'p*k*';
+                }
+            }
+            else if (context.frontEnvironment.type === 'middle') { // 모음 뒤
+                if (context.backEnvironment.type === 'middle') { // 모음 앞
+                    phoneticSymbol = 'pk*';
+                }
+            }
+            else if (context.frontEnvironment.type === 'compatibility') {//단독 ㄱ 뒤
+                    phoneticSymbol = 'p*k*';
             }
             break;
         case 0x1123: // 초성 ㅵ
-            phoneticSymbol = 'pt*';
+        if (context.frontEnvironment.type === null) { // 어두
+                phoneticSymbol = 'pt*';
+            }
+            else if (context.frontEnvironment.type === 'final') { // 종성 뒤
+                if ([0x11ab, 0x11af, 0x11b7, 0x11bc, 0x11f0, 0x11B1].includes(context.frontEnvironment.charCode)) { // 받침 ㄴ, ㄹ, ㅁ, ㅇ, ㆁ(옛이응), ㄻ 뒤
+                    phoneticSymbol = 'pt*';
+                }
+                else { // 받침 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㄹㆆ, ㅧ, ㄺ, ㄼ, ㄽ, ㅯ, ㅄ,  ㄱㅅ, ㄹㆆ, ㆁㅅ(옛이응+ㅅ) 등 그 외 자음 뒤
+                    phoneticSymbol = 'p*t*';
+                }
+            }
+            else if (context.frontEnvironment.type === 'middle') { // 모음 뒤
+                if (context.backEnvironment.type === 'middle') { // 모음 앞
+                    phoneticSymbol = 'pt*';
+                }
+            }
+            else if (context.frontEnvironment.type === 'compatibility') {//단독 ㄱ 뒤
+                    phoneticSymbol = 'p*t*';
+            }
             break;
         case 0x11B0: // 종성 ㄺ
             if (context.frontEnvironment.type === 'middle') {
