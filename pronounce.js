@@ -980,16 +980,19 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             phoneticSymbol = 'm';
             break;
         case 0x11AA: // 종성 ᆪ
-         if (context.frontEnvironment.type === 'middle') { // 모음 뒤(받침에만 쓰임)
-            if (context.backEnvironment.type === null) { // 어말
-                phoneticSymbol = 'k˺';
+            if (context.frontEnvironment.type === 'middle') { // 모음 뒤(받침에만 쓰임)
+                if (context.backEnvironment.type === null) { // 어말
+                    phoneticSymbol = 'k˺';
+                }
+                else if ([0x1100, 0x1103, 0x1107, 0x1109, 0x110C, 0x1110, 0x110E, 0x1111, 0x1127, 0x1121, 0x112D, 0x112F].includes(context.backEnvironment.charCode)) { // ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㅌ, ㅊ, ㅍ, ㅶ, ㅄ, ㅺ, ㅼ 앞
+                    phoneticSymbol = 'k˺';
+                }
+                else if ([0x1102, 0x1106].includes(context.backEnvironment.charCode)) { // 초성 ㄴ, ㅁ 앞
+                    phoneticSymbol = 'ŋ';
+                }
+
             }
-            else { // 초성 ㄱ, ㄷ,  ㅂ, ㅅ, ㅈ 앞
-                phoneticSymbol = 'k˺s*';
-            }
-        }
-        break;
-        
+            break;
         case 0x11F1: // 종성 ᇱ // TODO ㅇㅅ이 아니라 옛ㅇㅅ이 맞는지 확인
             phoneticSymbol = 'ŋ';
             break;
