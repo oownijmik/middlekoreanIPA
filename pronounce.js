@@ -842,11 +842,24 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             }
             break;
         case 0x1129: // 초성 ㅷ
-            if (context.frontEnvironment.charCode === 0x11A8) { // 받침 ㄱ 뒤
-                phoneticSymbol = 'p*tʰ';
-            }
-            else { // 나머지 모든 환경
+        if (context.frontEnvironment.type === null) { // 어두
                 phoneticSymbol = 'ptʰ';
+            }
+            else if (context.frontEnvironment.type === 'final') { // 종성 뒤
+                if ([0x11ab, 0x11af, 0x11b7, 0x11bc, 0x11f0, 0x11B1].includes(context.frontEnvironment.charCode)) { // 받침 ㄴ, ㄹ, ㅁ, ㅇ, ㆁ(옛이응), ㄻ 뒤
+                    phoneticSymbol = 'ptʰ';
+                }
+                else { // 받침 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㄹㆆ, ㅧ, ㄺ, ㄼ, ㄽ, ㅯ, ㅄ,  ㄱㅅ, ㄹㆆ, ㆁㅅ(옛이응+ㅅ) 등 그 외 자음 뒤
+                    phoneticSymbol = 'p*tʰ';
+                }
+            }
+            else if (context.frontEnvironment.type === 'middle') { // 모음 뒤
+                if (context.backEnvironment.type === 'middle') { // 모음 앞
+                    phoneticSymbol = 'ptʰ';
+                }
+            }
+            else if (context.frontEnvironment.type === 'compatibility') {//단독 ㄱ 뒤
+                    phoneticSymbol = 'p*tʰ';
             }
             break;
         case 0x1122: // 초성 ㅴ
