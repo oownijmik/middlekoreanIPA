@@ -951,18 +951,22 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
         case 0x11B3: // 종성 ㄽ
             if (context.frontEnvironment.type === 'middle') { // 모음 뒤(받침에만 쓰임)
                 if (context.backEnvironment.type === null) { // 어말
-                    phoneticSymbol = 't˺';
+                    phoneticSymbol = 'ɾt˺';
                 }
-                else if ([0x1100, 0x1103, 0x1107, 0x1109, 0x110C, 0x110E, 0x1110, 0x1121].includes(context.backEnvironment.charCode)) { // 초성 ㄱ, ㄷ,  ㅂ, ㅅ, ㅈ, ㅊ, ㅌ, ㅄ 앞
-                    phoneticSymbol = 't˺';
+                else if ([0x1100, 0x1103, 0x1107, 0x1109, 0x110C, 0x1110, 0x110E, 0x1111, 0x1127, 0x1121, 0x112D, 0x112F].includes(context.backEnvironment.charCode)) { // ㄱ, ㄷ, ㅂ, ㅅ, ㅈ, ㅌ, ㅊ, ㅍ, ㅶ, ㅄ, ㅺ, ㅼ 앞
+                    phoneticSymbol = 'ɾt˺';
                 }
                 else if ([0x1102, 0x1106].includes(context.backEnvironment.charCode)) { // 초성 ㄴ, ㅁ 앞
-                    phoneticSymbol = 'n';
+                    phoneticSymbol = 'ɾn';
                 }
                 else if (context.backEnvironment.charCode === 0x110B) { // 초성 ㅇ 앞
-                    phoneticSymbol = 'd';
+                    phoneticSymbol = 'ɾd';
+                }
+                else if (context.backEnvironment.charCode === 0x1112) { // 초성 ㅎ 앞
+                    phoneticSymbol = 'ɾt';
                 }
             }
+            break;
         case 0x11C7: // 종성 ㅧ
             phoneticSymbol = 'n';
             break;
