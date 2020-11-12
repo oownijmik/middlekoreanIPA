@@ -748,8 +748,15 @@ function charCodeToPhoneticSymbol(charCode, context, backContextOfNextChar) {
             break;
         case 0x1121: // 초성 ㅄ
             if (context.frontEnvironment.type === null) { // 어두
-                phoneticSymbol = 'ps';
-            }
+                
+              if ([0x1175, 0x116D, 0x1163, 0x1172, 0x1167, 0x1188, 0x1164, 0x1194, 0x1168].includes(context.backEnvironment.charCode)) { // ㅣ, ㅛ, ㅑ, ㅠ, ㅕ, ㆉ, ㅒ, ㆌ, ㅖ 앞
+                    phoneticSymbol = 'pʃ';
+                    // ㆍ, ㅡ , ㅗ, ㅏ, ㅜ, ㅓ, ㆎ, ㅢ, ㅚ, ㅐ, ㅟ, ㅔ, ㅙ, ㅞ, ㅘ, ㅝ 앞
+                }
+              else { // 그 외 모음 앞
+                    phoneticSymbol = 'ps';
+                }
+            }    
             else if ([0x11ab, 0x11af, 0x11b7, 0x11bc, 0x11f0].includes(context.frontEnvironment.charCode)) { // 받침 ㄴ, ㄹ, ㅁ, ㅇ, ㆁ(옛이응) 뒤
                 phoneticSymbol = 'ps';
             }
